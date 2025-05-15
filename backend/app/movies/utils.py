@@ -24,7 +24,7 @@ def validate_movies_csv(file_path):
                 movies.append(movie.model_dump())
         return movies
     except ValidationError as e:
-        raise ValidationError(f"Validation error: {e.errors()}")
+        raise ValueError(f"Validation error: {e.errors()}")
     except UnicodeDecodeError:
         raise ValueError("File encoding is not supported. Please use 'latin_1'.")
     except csv.Error as e:

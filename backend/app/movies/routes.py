@@ -3,7 +3,6 @@ import os
 from . import movies_bp
 from .utils import allowed_file_extension, validate_movies_csv
 from flask import request, current_app, jsonify
-from pydantic import ValidationError
 from werkzeug.utils import secure_filename
 
 @movies_bp.route('/movies', methods=['GET'])
@@ -48,7 +47,7 @@ def upload_movies_file():
     try:
         current_app.config['movie_data'] = validate_movies_csv(file_path)
         return jsonify({"movies": current_app.config['movie_data'][:5]}), 200
-    except ValidationError:
+    except ValueError:
         return jsonify({"message": "Validation error: Invalid data in the file"}), 422
     except Exception as e:
         return jsonify({"message": f"Failed to read file: {str(e)}"}), 500
