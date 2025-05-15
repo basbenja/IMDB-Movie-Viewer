@@ -2,6 +2,8 @@ import axios from "axios";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 
+const backendURL = import.meta.env.VITE_BACKEND_URL
+
 function FileUploader({ onUploadSucess }) {
   const [loading, setLoading] = useState(false);
   const [uploadError, setUploadError] = useState(null);
@@ -14,6 +16,7 @@ function FileUploader({ onUploadSucess }) {
 
   async function handleFileUpload(event) {
     const file = event.target.files[0];
+    console.log(file.name);
     if (!file) return;
 
     setLoading(true);
@@ -21,22 +24,23 @@ function FileUploader({ onUploadSucess }) {
       const formData = new FormData();
       formData.append("file", file);
 
-      const response = await axios.post("http://localhost:5000/movies/upload", formData);
+      const response = await axios.post(`${backendURL}/movies/upload`, formData);
 
       if (response.status === 200) {
         const data = response.data;
-        onUploadSucess(data.movies ? true : false);
+        onUploadSucess(data.movies ? true : false, file);
         setUploadError(null);
       }
     } catch (error) {
       if (error.response) {
         if (error.response.status === 415) {
           setUploadError("Unsupported file type. Please upload a CSV file.");
+        } else if (error.response.status === 422) {
+          setUploadError("Invalid file format. Please check the file structure.");
         } else {
           setUploadError("Error uploading file. Please try again.");
         }
       } else {
-        // Network error or other issues
         setUploadError("Error uploading file. Please try again.");
       }
       console.error("Error uploading file:", error);
@@ -59,14 +63,17 @@ function FileUploader({ onUploadSucess }) {
 
         <div className="relative group">
           <InformationCircleIcon className="h-6 w-6 text-white cursor-pointer" />
-          <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-64 bg-white text-gray-800 text-sm px-4 py-2 rounded shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-10">
+          <div className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-64 bg-white
+          text-gray-800 text-sm px-4 py-2 rounded shadow-lg opacity-0 group-hover:opacity-100
+          transition-opacity duration-200 z-10"
+          >
             For now, we only accept CSV files that must have the columns <br />
             <strong>title, year, genre, description</strong>
           </div>
         </div>
 
         {loading && (
-          <div className="animate-spin rounded-full h-6 w-6 border-4 border-t-transparent border-white"></div>
+          <div className="animate-spin ml-3 rounded-full h-6 w-6 border-4 border-t-transparent border-white"></div>
         )}
 
         <input
