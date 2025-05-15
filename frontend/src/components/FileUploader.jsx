@@ -39,7 +39,7 @@ function FileUploader({ onUploadSucess }) {
 
 
   return (
-    <div className="flex flex-row items-center space-y-4">
+    <div className="flex flex-row items-center mb-4">
       <button
         className="cursor-pointer px-6 py-2 bg-violet-600 text-white font-semibold
         rounded hover:bg-violet-400 transition mr-2"

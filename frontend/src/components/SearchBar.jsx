@@ -1,6 +1,6 @@
 function SearchBar ({ searchTerm, onSearchTermChange }) {
   return (
-    <form className="w-full max-w-md mx-auto mb-6">
+    <form className="w-full max-w-md mx-auto mb-4">
       <input
         type="text"
         value={searchTerm}
