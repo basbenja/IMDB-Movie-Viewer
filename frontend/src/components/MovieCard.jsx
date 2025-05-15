@@ -25,14 +25,15 @@ const genreEmoji = {
 function MovieCard({ title, year, director, genre, description }) {
   return (
     <div
-      className="w-60 h-90 bg-white shadow-md rounded-xl p-4 border border-gray-200
-      m-px flex flex-col justify-between hover:scale-102 transition-transform duration-300 cursor-default"
+      className="w-65 h-90 bg-white rounded-xl p-4 border border-gray-200
+      m-px flex flex-col justify-between hover:scale-102 hover:shadow-[0_0_25px_0_rgba(139,92,246,0.5)]
+      transition-all duration-300 cursor-default"
     >
       <div>
         <h2 className="text-lg text-center font-semibold">{title}</h2>
-        <p className="text-sm text-center text-gray-500 mb-2">{director}</p>
-        <p className="text-sm text-center text-gray-500 mb-2">{year}</p>
-        <p className="text-sm text-center text-gray-500">
+        <p className="text-sm text-center text-gray-600 mb-2">{director}</p>
+        <p className="text-sm text-center text-gray-600 mb-2">{year}</p>
+        <p className="text-sm text-center text-gray-600">
           {genre.split(",").map((g, index) => (
             <span key={index}>
               {g + " " + (genreEmoji[g.trim()] || "")}
@@ -40,7 +41,7 @@ function MovieCard({ title, year, director, genre, description }) {
             </span>
           ))}
         </p>
-        <p className="text-gray-700 text-center text-sm mt-2">{description}</p>
+        <p className="text-gray-800 text-center text-sm mt-2">{description}</p>
       </div>
     </div>
   );
