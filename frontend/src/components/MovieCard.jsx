@@ -18,10 +18,11 @@ const genreEmoji = {
   "Sci-Fi": "🚀",
   Music: "🎶",
   Musical: "🎤",
+  Family: "👨‍👩‍👧‍👦",
 }
 
 
-function MovieCard({ title, year, genre, description }) {
+function MovieCard({ title, year, director, genre, description }) {
   return (
     <div
       className="w-60 h-90 bg-white shadow-md rounded-xl p-4 border border-gray-200
@@ -29,6 +30,7 @@ function MovieCard({ title, year, genre, description }) {
     >
       <div>
         <h2 className="text-lg text-center font-semibold">{title}</h2>
+        <p className="text-sm text-center text-gray-500 mb-2">{director}</p>
         <p className="text-sm text-center text-gray-500 mb-2">{year}</p>
         <p className="text-sm text-center text-gray-500">
           {genre.split(",").map((g, index) => (
