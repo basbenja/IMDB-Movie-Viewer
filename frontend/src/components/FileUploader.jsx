@@ -30,7 +30,7 @@ function FileUploader({ onUploadSucess }) {
           transition-opacity duration-200 z-10"
           >
             For now, we only accept CSV files that must have the columns <br />
-            <strong>title, year, genre, description</strong>
+            <strong>title, year, genre, description, director</strong>
           </div>
         </div>
 
