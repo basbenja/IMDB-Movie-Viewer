@@ -1,7 +1,10 @@
 import os
 
-class Config:
+class ConfigBase:
+    TESTING = False
     DATA_STORAGE_PATH = os.environ.get(
         'DATA_STORAGE_PATH', os.path.abspath(os.path.join(os.path.dirname(__file__), 'data'))
     )
-    SECRET_KET = os.environ.get('SECRET_KEY', 'dev')
+
+class ConfigDev(ConfigBase):
+    DEBUG = True
