@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import NumberFlow from '@number-flow/react'
 import MovieCard from "./MovieCard";
 
 function ArrowButton({ direction, onClick, disabled }) {
@@ -20,9 +20,7 @@ function ArrowButton({ direction, onClick, disabled }) {
   );
 }
 
-function MovieCatalog ({ movies, onPageChange, currentPage, totalPages }) {
-  const [direction, setDirection] = useState(0);
-
+function MovieCatalog ({ movies, onPageChange, currentPage, totalPages, moviesPerPage }) {
   function handlePrev() {
     if (currentPage > 1) {
       onPageChange(currentPage - 1);
@@ -36,35 +34,51 @@ function MovieCatalog ({ movies, onPageChange, currentPage, totalPages }) {
   };
 
   return (
-    <div className="flex flex-row items-center justify-center gap-4">
-      <ArrowButton
-        direction="left"
-        onClick={handlePrev}
-        disabled={currentPage === 1}
-      />
+    <>
+    <div className="flex flex-row items-center justify-center gap-4 w-full h-100">
+      {(movies.length > 0) ? (
+        <>
+        <ArrowButton
+          direction="left"
+          onClick={handlePrev}
+          disabled={currentPage === 1}
+        />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4">
-        <AnimatePresence mode="wait">
-          {movies.map((movie) => (
-            <motion.div
-              key={movie.title + movie.year}
-              initial={{ opacity: 0, x: 0 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: 0 }}
-              transition={{ duration: 0.3 }}
-            >
-              <MovieCard {...movie} />
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
+        <div className="h-90 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-4">
+          <AnimatePresence mode="wait">
+            {movies.map((movie) => (
+              <motion.div
+                key={movie.title + movie.year}
+                initial={{ opacity: 0, x: 0 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: 0 }}
+                transition={{ duration: 0.3 }}
+              >
+                <MovieCard {...movie} />
+              </motion.div>
+            ))}
+          </AnimatePresence>
+        </div>
 
-      <ArrowButton
-        direction="right"
-        onClick={handleNext}
-        disabled={currentPage === totalPages}
-      />
+        <ArrowButton
+          direction="right"
+          onClick={handleNext}
+          disabled={currentPage === totalPages}
+        />
+        </>
+      ) : (
+        <p className="text-xl font-medium mb-4 text-gray-500">
+          No movies found.
+        </p>
+      )
+      }
     </div>
+    <div className="flex flex-row items-center justify-center gap-4 mt-4">
+      <p className="text-gray-500">
+        Page <NumberFlow value={(totalPages > 0) ? currentPage: 0} /> of {totalPages}
+      </p>
+    </div>
+    </>
   );
 };
 

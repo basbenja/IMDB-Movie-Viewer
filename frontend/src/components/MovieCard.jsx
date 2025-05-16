@@ -25,7 +25,7 @@ const genreEmoji = {
 function MovieCard({ title, year, director, genre, description }) {
   return (
     <div
-      className="w-65 h-90 bg-white rounded-xl p-4 border border-gray-200
+      className="w-full h-full bg-white rounded-xl p-4 border border-gray-200
       m-px flex flex-col justify-between hover:scale-102 hover:shadow-[0_0_25px_0_rgba(139,92,246,0.5)]
       transition-all duration-300 cursor-default"
     >
