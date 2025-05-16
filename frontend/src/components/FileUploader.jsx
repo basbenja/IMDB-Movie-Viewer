@@ -1,8 +1,6 @@
-import axios from "axios";
+import { handleFileUpload } from "../services/FileUploader";
 import { InformationCircleIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
-
-const backendURL = import.meta.env.VITE_BACKEND_URL
 
 function FileUploader({ onUploadSucess }) {
   const [loading, setLoading] = useState(false);
@@ -13,42 +11,6 @@ function FileUploader({ onUploadSucess }) {
   function handleClick() {
     inputRef.current.click();
   };
-
-  async function handleFileUpload(event) {
-    const file = event.target.files[0];
-    console.log(file.name);
-    if (!file) return;
-
-    setLoading(true);
-    try {
-      const formData = new FormData();
-      formData.append("file", file);
-
-      const response = await axios.post(`${backendURL}/movies/upload`, formData);
-
-      if (response.status === 200) {
-        const data = response.data;
-        onUploadSucess(data.movies ? true : false, file);
-        setUploadError(null);
-      }
-    } catch (error) {
-      if (error.response) {
-        if (error.response.status === 415) {
-          setUploadError("Unsupported file type. Please upload a CSV file.");
-        } else if (error.response.status === 422) {
-          setUploadError("Invalid file format. Please check the file structure.");
-        } else {
-          setUploadError("Error uploading file. Please try again.");
-        }
-      } else {
-        setUploadError("Error uploading file. Please try again.");
-      }
-      console.error("Error uploading file:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
 
   return (
     <div className="flex flex-col items-center justify-center">
@@ -81,7 +43,7 @@ function FileUploader({ onUploadSucess }) {
           accept=".csv"
           ref={inputRef}
           className="hidden"
-          onChange={(e) => handleFileUpload(e)}
+          onChange={(e) => handleFileUpload(e, setLoading, setUploadError, onUploadSucess)}
         />
       </div>
 
