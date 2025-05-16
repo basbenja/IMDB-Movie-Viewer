@@ -31,6 +31,3 @@ def validate_movies_csv(file_path):
         raise ValueError(f"Error reading CSV file at line {reader.line_num}: {e}")
     except Exception as e:
         raise RuntimeError(f"An unexpected error occurred: {e}")
-
-path = "/home/basbenja/Dev/IMDB-Movie-Viewer/backend/data/IMDb_movies.csv"
-data = validate_movies_csv(path)
