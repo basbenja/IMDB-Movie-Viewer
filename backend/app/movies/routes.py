@@ -14,7 +14,7 @@ def get_movies():
 
     movies = current_app.config.get('movie_data', [])
     if not movies:
-        return "No movies were loaded yet. Please upload a file first.", 400
+        return jsonify({"message": "No movies were loaded yet. Please upload a file first."}), 400
     if title:
         movies = [movie for movie in movies if movie['title'].lower().startswith(title.lower())]
     if page and limit:
@@ -28,11 +28,8 @@ def get_movies():
 @movies_bp.route('/movies/upload', methods=['POST'])
 def upload_movies_file():
     file = request.files.get('file', None)
-    if not file:
+    if not file or file.filename == '':
         return jsonify({"message": "No file part in the request"}), 400
-
-    if file.filename == '':
-        return jsonify({"message": "No selected file"}), 400
 
     if not allowed_file_extension(file.filename):
         return jsonify({"message": "File type not allowed"}), 415
