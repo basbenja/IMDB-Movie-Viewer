@@ -38,6 +38,24 @@ def test_post_movies_file_invalid(client, sample_data_path):
     assert 'Validation error: Invalid data in the file' in response_json['message']
 
 
+def test_post_movies_file_invalid_extension(client, sample_data_path):
+    filename = 'my_IMDb_movies_fail.txt'
+    csv_fail_path = os.path.join(sample_data_path, filename)
+
+    with open(csv_fail_path, 'rb') as f:
+        response = client.post(
+            '/movies/upload',
+            data={'file': (f, filename)},
+            content_type='multipart/form-data'
+        )
+
+    response_json = response.get_json()
+    assert response.status_code == 415
+    assert 'movies' not in response_json
+    assert 'message' in response_json
+    assert 'File type not allowed' in response_json['message']
+
+
 def test_post_movies_no_file(client):
     response = client.post(
         '/movies/upload',
