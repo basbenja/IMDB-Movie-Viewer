@@ -23,6 +23,9 @@ en el archivo `requirements.txt`.
 pip install -r requirements.txt
 ```
 
+NOTA: `requirements.txt` también contiene las dependencias necesarias para correr los
+tests.
+
 #### **3. Establecer variables de entorno**
 En el archivo `.env`, darle un valor a la variable `DATA_STORAGE_PATH`. Esta hace
 referencia a la carpeta en donde quedarán almacenados los archivos de películas subidos
