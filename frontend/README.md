@@ -1,12 +1,33 @@
-# React + Vite
+# **Visualizador de películas IMBD - Frontend**
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## **Prerrequisitos**
+Para correr esta aplicación, es necesario contar con `node` y `npm` (Node Package
+Manager). Se puede instalar ambos con `nvm` (Node Version Manager) desde el siguiente
+link: [Download Node.js](https://nodejs.org/en/download/).
 
-Currently, two official plugins are available:
+Para verificar que la instalación fue exitosa, correr los siguientes comandos, que
+deberían devolver la versión de cada utilidad:
+```bash
+node -v
+npm -v
+```
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+En este proyecto, se usó la versión `v22.15.0` de `node` y la `10.9.2` de `npm`.
 
-## Expanding the ESLint configuration
+## **Pasos para ejecutar la aplicación localmente**
+#### **1. Instalar las dependencias**
+Dirigirse a la carpeta `frontend` y correr el siguiente comando para instalar las
+dependencias necesarias para ejecutar este proyecto:
+```bash
+npm install
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+#### **2. Establecer variables de entorno**
+La única variable de entorno que hay que establecer es `VITE_BACKEND_URL`, en el
+archivo `.env`. Esta hace referencia la URL en donde está corriendo el backend.
+
+
+#### **3. Correr la aplicación**
+```bash
+npm run dev
+```
